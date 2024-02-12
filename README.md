@@ -1,5 +1,8 @@
 # aiocrioc
-An LLM and OCR based Indicator of Compromise Extraction Tool
+An LLM and OCR based Indicator of Compromise Extraction Tool.
+Built as a POC to compare against straight regex and OCR see: [***ioc-ocr-extractor***](https://github.com/referefref/ioc-ocr-extractor)
+The LLM version does significantly better at understanding the context of indicators like domains and file extensions which are often confused with plain regex (such as .com)
+
 
 ## Setup (tested on Ubuntu 22.04 with python3-venv)
 ```bash
