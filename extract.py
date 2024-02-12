@@ -30,18 +30,18 @@ def download_page(url, user_agent):
 def download_images(soup, base_url):
 	print(Fore.BLUE + "Downloading images...")
 	images = soup.find_all('img')
-	downloaded_image_paths = []  # This list will store the paths of downloaded images.
+	downloaded_image_paths = []
 	for img in images:
 		img_url = urljoin(base_url, img.get('src'))
 		if not img_url:
-			continue  # Skip if img['src'] is None
+			continue
 		img_response = requests.get(img_url)
 		img_name = os.path.basename(img_url)
 		img_path = os.path.join(os.getcwd(), img_name)  
 		with open(img_path, 'wb') as f:
 			f.write(img_response.content)
-		downloaded_image_paths.append(img_path)  # Add the path to the list
-	return downloaded_image_paths  # Return the list of downloaded image paths
+		downloaded_image_paths.append(img_path)
+	return downloaded_image_paths
 
 def ocr_image(image_path):
 	print(Fore.BLUE + f"Performing OCR on {image_path}...")
@@ -59,9 +59,6 @@ def parse_openai_response_to_iocs(text):
 				"Indicator": parts[1].strip(),
 				"Context": parts[2].strip(),
 			})
-		#else:
-		#	print(Fore.RED + "Response format incorrect, resubmitting request...")
-		#	return None
 	return iocs
 
 def extract_iocs_with_openai(content, context_identifier, retry_count=0, max_retries=1):
