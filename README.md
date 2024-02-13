@@ -10,7 +10,7 @@ The LLM version does significantly better at understanding the context of indica
 apt install tesseract-ocr python3 python3-venv git -y
 # Clone git repo
 git clone https://github.com/referefref/aiocrioc.git
-cd ioc-ocr-extractor
+cd aiocrioc
 # Setup python3 virtual environment
 python3 -m venv env
 source env/bin/activate
