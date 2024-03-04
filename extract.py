@@ -3,6 +3,7 @@ import json
 import os
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+import binascii as ba
 import requests
 from PIL import Image
 import pytesseract
@@ -35,16 +36,28 @@ def download_images(soup, base_url):
     images = soup.find_all('img')
     # This list will store the paths of downloaded images.
     downloaded_image_paths = []
+    i = 0
     for img in images:
+        i += 1
         img_url = urljoin(base_url, img.get('src'))
         if not img_url:
             continue  # Skip if img['src'] is None
-        img_response = requests.get(img_url)
-        img_name = os.path.basename(img_url)
-        img_path = os.path.join(os.getcwd(), img_name)
-        with open(img_path, 'wb') as f:
-            f.write(img_response.content)
-        downloaded_image_paths.append(img_path)  # Add the path to the list
+
+        if 'data:image/' in img_url: #embedded images 
+            ext = img_url.partition('data:image/')[2].split(';')[0]
+            img_path = os.path.join(os.getcwd(), 'newim'+str(i)+'.'+ext)
+            with open(img_path,'wb') as f:
+                f.write(ba.a2b_base64(img_url.partition('base64,')[2]))
+            downloaded_image_paths.append(img_path)
+
+        else:
+            img_response = requests.get(img_url)
+            img_name = os.path.basename(img_url)
+            img_path = os.path.join(os.getcwd(), img_name)
+            with open(img_path, 'wb') as f:
+                f.write(img_response.content)
+            downloaded_image_paths.append(img_path)  # Add the path to the list
+
     return downloaded_image_paths  # Return the list of downloaded image paths
 
 
@@ -66,8 +79,8 @@ def parse_openai_response_to_iocs(text):
                 "Context": parts[2].strip(),
             })
         # else:
-        #	print(Fore.RED + "Response format incorrect, resubmitting request...")
-        #	return None
+        #   print(Fore.RED + "Response format incorrect, resubmitting request...")
+        #   return None
     return iocs
 
 
@@ -117,7 +130,13 @@ def cleanup_files(file_paths):
 
 def main(url, output_file, user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3", retry_limit=1):
     print(Fore.GREEN + "Starting IOC extraction process...")
-    page_content = download_page(url, user_agent)
+
+    if "file://" in url: #reading html content from local files
+        from pathlib import Path
+        page_content = Path(url.split("file://")[1]).read_text()
+    else:
+        page_content = download_page(url, user_agent)
+
     soup = BeautifulSoup(page_content, 'html.parser')
     text_content = soup.get_text()
     downloaded_images = download_images(soup, url)
