@@ -1,0 +1,7 @@
+beautifulsoup4==4.11.1
+colorama==0.4.6
+openai==1.13.3
+Pillow==10.2.0
+pytesseract==0.3.10
+python-dotenv==1.0.1
+Requests==2.31.0
