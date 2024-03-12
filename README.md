@@ -3,7 +3,10 @@ An LLM and OCR based Indicator of Compromise Extraction Tool.
 Built as a POC to compare against straight regex and OCR see: [***ioc-ocr-extractor***](https://github.com/referefref/ioc-ocr-extractor)
 The LLM version does significantly better at understanding the context of indicators like domains and file extensions which are often confused with plain regex (such as .com)
 
-
+## Contributions
+* Thanks to [***Marco Ramilli***](https://github.com/marcoramilli) for the addition of local file:// and embedded image parsing
+* Additional contributions are welcomed
+  
 ## Setup (tested on Ubuntu 22.04 with python3-venv)
 ```bash
 # Download and install requirements
