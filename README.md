@@ -2,7 +2,7 @@
 An LLM and OCR based Indicator of Compromise Extraction Tool.
 Built as a POC to compare against straight regex and OCR see: [***ioc-ocr-extractor***](https://github.com/referefref/ioc-ocr-extractor)
 The LLM version does significantly better at understanding the context of indicators like domains and file extensions which are often confused with plain regex (such as .com)
-As featured on [***GreyNoise Intelligence Storm Watch***](https://www.youtube.com/watch?v=sQpFLLZy4Yw)
+- As featured on [***GreyNoise Intelligence Storm Watch***](https://www.youtube.com/watch?v=sQpFLLZy4Yw), [***Risky Biz***](https://news.risky.biz/risky-biz-news-intellexa-pulls-new-predator-spyware-infra-after-thorough-undressing/), [***National Cyber Security Centre Newsletter***](https://ctoatncsc.substack.com/p/cto-at-ncsc-summary-week-ending-march-7ee)
 
 ## Contributions
 * Thanks to [***Marco Ramilli***](https://github.com/marcoramilli) for the addition of local file:// and embedded image parsing
